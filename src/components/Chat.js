@@ -6,14 +6,8 @@ import {vscDarkPlus} from "react-syntax-highlighter/dist/esm/styles/prism"
 import {GoogleGenerativeAI} from "@google/generative-ai";
 import {Button} from "@mui/material";
 
-/*import { GoogleGemini } from 'langchain/llms/google_gemini'; // Import Gemini
-import { SQLDatabase } from 'langchain/utilities/sql_database';
-import { createSqlAgent } from 'langchain/agents';
-import { SQLDatabaseToolkit } from 'langchain/agents/agent_toolkits';
-import { AgentType } from 'langchain/agents/agent_types';*/
-
-const genAi = new GoogleGenerativeAI("AIzaSyABlwRles6WgTsFm0smPna5R3Xsj2SXAV8");//process.env.GEMNI_API_KEY);
-const model = genAi.getGenerativeModel({model: "gemini-1.5-pro"});
+const genAi = new GoogleGenerativeAI("XXXXXXXXXXXXXXXXXXXXXXXXX"); //removed the original one for security reasons
+const model = genAi.getGenerativeModel({model: "gemini-1.5-flash"});
 
 const Chat = () => {
     const [messages, setMessages] = useState([
@@ -25,7 +19,6 @@ const Chat = () => {
     const messageEndRef = useRef(null);
     const chatSessionRef = useRef(null);
 
-    //const dbUri = "Server=DESKTOP-MBVT1T8\\MSSQLSERVER2022;Database=Fimc;User ID=sa;Password=password12345;TrustServerCertificate=True";
 
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({behavior: "smooth"})
@@ -155,67 +148,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-/*const Chat = () => {
-    const [messages, setMessages] = useState([]);
-    const [userInput, setUserInput] = useState('');
-
-    const sendMessage = async () => {
-        if (!userInput.trim()) return;
-
-        const userMessage = { role: 'user', content: userInput };
-        setMessages([...messages, userMessage]);
-
-        try {
-            const response = await axios.post('http://localhost:5000/api/query', {
-                query: `SELECT * FROM your_table WHERE your_column LIKE '%${userInput}%'`,
-            });
-
-            const botMessage = {
-                role: 'bot',
-                content: response.data.length
-                    ? JSON.stringify(response.data, null, 2)
-                    : 'No results found.',
-            };
-            setMessages((prev) => [...prev, botMessage]);
-        } catch (error) {
-            const errorMessage = {
-                role: 'bot',
-                content: 'Error fetching data. Please try again.',
-            };
-            setMessages((prev) => [...prev, errorMessage]);
-        }
-
-        setUserInput('');
-    };
-
-    return (
-        <Box>
-            <Box>
-                {messages.map((msg, index) => (
-                    <Typography
-                        key={index}
-                        align={msg.role === 'user' ? 'right' : 'left'}
-                        sx={{ backgroundColor: msg.role === 'user' ? '#e1f5fe' : '#c8e6c9', padding: '8px', margin: '4px 0' }}
-                    >
-                        {msg.content}
-                    </Typography>
-                ))}
-            </Box>
-            <Box display="flex" mt={2}>
-                <TextField
-                    variant="outlined"
-                    fullWidth
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    placeholder="Ask a question..."
-                />
-                <Button variant="contained" onClick={sendMessage}>
-                    Send
-                </Button>
-            </Box>
-        </Box>
-    );
-};
-
-export default Chat;*/
